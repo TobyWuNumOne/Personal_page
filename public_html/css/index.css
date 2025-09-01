@@ -1,0 +1,291 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main_color {
+    /* background: #ff9041; */
+    background-color: #333 !important;
+}
+
+#menuToggle {
+    display: block;
+    /* You can also use relative/absolute here if you want to stay on the top */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    z-index: 1;
+
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#menuToggle a {
+    text-decoration: none;
+    color: #232323;
+
+    transition: color 0.3s ease;
+}
+
+#menuToggle a:hover {
+    color: #ff9041;
+
+}
+
+
+#menuToggle input {
+    display: block;
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    top: -7px;
+    right: -5px;
+
+    cursor: pointer;
+
+    opacity: 0;
+    /* hide this */
+    z-index: 2;
+    /* and place it over the hamburger */
+
+    -webkit-touch-callout: none;
+}
+
+/*
+  * Just a quick hamburger
+  */
+#menuToggle span {
+    display: block;
+    width: 33px;
+    height: 4px;
+    margin-bottom: 5px;
+    position: relative;
+    background: #ff9041;
+    border-radius: 3px;
+    z-index: 1;
+    transform-origin: 4px 0px;
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+        background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+        opacity 0.55s ease;
+}
+
+#menuToggle span:first-child {
+    transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+    transform-origin: 0% 100%;
+}
+
+/* 
+  * Transform all the slices of hamburger
+  * into a crossmark.
+  */
+#menuToggle input:checked~span {
+    opacity: 1;
+    transform: rotate(45deg) translate(-2px, -1px);
+    background: #232323;
+}
+
+/*
+  * But let's hide the middle one.
+  */
+#menuToggle input:checked~span:nth-last-child(3) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+  * Ohyeah and the last one should go the other direction
+  */
+#menuToggle input:checked~span:nth-last-child(2) {
+    transform: rotate(-45deg) translate(0, -1px);
+}
+
+/*
+  * Make this absolute positioned
+  * at the top left of the screen
+  */
+#menu {
+    position: absolute;
+    left: -250px;
+    max-width: 400px;
+    width: 100vw;
+    max-height: 100vh;
+    margin: -100px -50px 0 0;
+    padding: 50px;
+    padding-top: 125px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background: #686868;
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+    /* to stop flickering of text in safari */
+
+    transform-origin: 100% 0%;
+    transform: translate(600%, 0);
+
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+}
+
+#menu li {
+    padding: 10px 0;
+    font-size: 22px;
+}
+
+#menu li label {
+    cursor: pointer;
+}
+
+/*
+  * And let's slide it in from the left
+  */
+#menuToggle input:checked~ul {
+    transform: none;
+}
+
+.nav_bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+}
+
+.logo {
+    position: relative;
+    width: 40%;
+    height: 42px;
+    background-image: url("../image/logo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+
+.social_bar {
+    display: flex;
+    justify-content: center;
+    align-content: flex-end;
+    margin: 0;
+}
+
+.social_bar a {
+    height: 40px;
+}
+
+.social-logo {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+}
+
+.fig_font {
+    font-size: 0.7em;
+    color: #666;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+#github_chart {
+    position: relative;
+    width: 80%;
+    margin: 20px auto;
+}
+
+#footer {
+    color: #e0e0e0;
+    font-size: 0.7em;
+    text-align: center;
+    margin: 0;
+}
+
+#love {
+    font-size: 0.5em;
+    margin: 0;
+    text-align: center;
+}
+
+footer {
+    background: #333;
+    padding: 8px 0 8px 0;
+    margin-top: auto;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Profile Header modern style */
+
+.main-profile {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+    padding: 32px 0;
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    background: url('../image/IMG_1643.jpg') center;
+    background-position: center 0px;
+    background-size: cover;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+.profile-names {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #2f2f2f;
+    padding: 5px 10px;
+    margin-left: 24px;
+
+}
+
+.verifiedIcon {
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 0;
+    width: 20px;
+    height: 20px;
+    background: url('../image/verified-badge.svg') center;
+}
+
+.username {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.2em;
+}
+
+.page-title {
+    color: #bbb;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 992px) {
+    .main-profile {
+        flex-direction: column;
+        text-align: center;
+        padding: 16px 0;
+        align-items: center;
+    }
+
+    .profile-names {
+        margin-left: 0;
+        margin-top: 12px;
+        border-radius: 0 0 20px 20px;
+        padding: 10px 16px;
+    }
+
+    .profile-header {
+        border-radius: 20px 20px 0 0;
+    }
+}

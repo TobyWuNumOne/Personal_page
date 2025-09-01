@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Tai Zan The Bar - A test page for web development.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太讚了吧taizanthebar</title>
+    <link rel="icon" href="/image/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./css/index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="nav_bar">
+        <div class="logo"></div>
+        <div id="menuToggle">
+            <input type="checkbox" id="menuCheckbox" />
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <li>
+                    <a href="//taizanthebar.com">
+                        <label for="menuCheckbox" onclick="this.parentNode.click();">Home</label>
+                    </a>
+                </li>
+                <li>
+                    <a href="//personal.taizanthebar.com">
+                        <label for="menuCheckbox" onclick="this.parentNode.click();">Resume</label>
+                    </a>
+                </li>
+                <li>
+                    <a href="//grup_order.taizanthebar.com" target="_blank">揪團系統</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container justify-content-center align-content-lg-center">
+        <!-- Profile Header Start -->
+        <div class="row">
+            <div class="main-profile col-12 col-lg-6 mt-5 mt-lg-3">
+                <div class="profile-image">
+                </div>
+                <div class="profile-names">
+                    <h1 class="username">Cody Wu<svg class="verifiedIcon"></svg></h1>
+                    <small class="page-title">TaiZanLer</small>
+                    <!-- <small class="page-title">Quasi-WebDeveloper</small> -->
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 align-self-end">
+                <div class="social_bar ">
+                    <!-- 這裡icon內放社交連結 -->
+                    <a href="https://www.instagram.com/taizanthebar?igsh=NWFla2wxeXBiamZu&utm_source=qr"><img
+                            src="./image/icon/instagram.svg" alt="social-icon" class="social-logo"></a>
+                    <a href="https://github.com/TobyWuNumOne"><img src="./image/icon/gethub.svg" alt="social-icon"
+                            class="social-logo"></a>
+                    <a href="#"><img src="./image/icon/facebook.svg" alt="social-icon" class="social-logo"></a>
+                    <a href="//linkedin.com/in/wu-cody-6b3665357"><img src="./image/icon/linkedin.svg" alt="social-icon"
+                            class="social-logo"></a>
+                    <a href="#"><img src="./image/icon/line.svg" alt="social-icon" class="social-logo"></a>
+                </div>
+                <figure class="figure mt-2 m-0">
+                    <img src="https://ghchart.rshah.org/303030/TobyWuNumOne" class="figure-img img-fluid rounded"
+                        alt="TobyWuNumOne's Github chart">
+                    <figcaption class="text-center fig_font">MURMUR on Github</figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p id="footer">&copy; 2025 太讚了吧. All rights reserved.</p>
+        <p id="footer">聯絡我們: <a id="footer" href="mailto:o@gmail.com">o@gmail.com</a></p>
+        <p id="love">I Love Lia !!!!</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
