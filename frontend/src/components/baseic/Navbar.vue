@@ -2,7 +2,7 @@
     import lightlogo from '@/assets/light-logo.png';
     import logo from '@/assets/logo.png';
 
-    import { useTheme } from '@/composables/useTheme';
+    import { useTheme } from '@/composables/UseTheme';
     import { useRoute } from 'vue-router';
 
     const { theme, toggleTheme } = useTheme();
