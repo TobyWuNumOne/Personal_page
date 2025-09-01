@@ -1,0 +1,23 @@
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Build / temp
+dist/
+tmp/
+*.tmp
+
+# PocketBase data (會在 Railway Volume 持久化，避免被 commit)
+pb_data/
+pb_public/
+pb_migrations/
