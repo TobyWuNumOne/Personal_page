@@ -1,19 +1,29 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/pages/Home.vue';
 import Profile from '@/pages/Profile.vue';
-// import About from '@/pages/About.vue';
-// import Exmp from '@/pages/Exmp.vue';
-// import HelloWorld from '@/components/HelloWorld.vue';
-// import UserList from '.@/pages/UserList.vue';
+import MyProject from '@/pages/MyProject.vue';
+import Blog from '@/pages/Blog.vue';
 
 const routes = [
     {
         path: '/',
+        name: 'Home',
         component: Home,
     },
     {
         path: '/profile',
+        name: 'Profile',
         component: Profile,
+    },
+    {
+        path: '/MyProject',
+        name: 'MyProject',
+        component: MyProject,
+    },
+    {
+        path: '/blog',
+        name: 'Blog',
+        component: Blog,
     },
 ];
 

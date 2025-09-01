@@ -1,6 +1,7 @@
 <template>
     <footer
-        class="fixed bottom-0 left-0 w-full bg-white dark:bg-background-dark text-gray-500 dark:text-gray-400 text-center py-4 border-t border-border dark:border-border-dark z-50"
+        v-show="isVisible"
+        class="w-full bg-white dark:bg-background-dark text-gray-500 dark:text-gray-400 text-center py-4 border-t border-border dark:border-border-dark"
     >
         <div class="w-full max-w-screen-xl mx-auto px-4">
             <div class="sm:flex sm:items-center sm:justify-between">
@@ -64,15 +65,37 @@
 </template>
 
 <script setup>
+    import { ref, onMounted, onUnmounted } from 'vue';
     import lightlogo from '@/assets/light-logo.png';
     import logo from '@/assets/logo.png';
 
-    import { useTheme } from '@/composables/UseTheme';
+    import { useTheme } from '@/composables/useTheme';
     const { theme, toggleTheme } = useTheme();
+
+    const isVisible = ref(false);
+
+    const handleScroll = () => {
+        const scrollTop =
+            window.pageYOffset || document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+
+        // 當滾動到頁面底部附近時顯示 footer（距離底部 100px 內）
+        const distanceFromBottom = documentHeight - (scrollTop + windowHeight);
+        isVisible.value = distanceFromBottom <= 100;
+    };
+
+    onMounted(() => {
+        window.addEventListener('scroll', handleScroll);
+        // 初始檢查
+        handleScroll();
+    });
+
+    onUnmounted(() => {
+        window.removeEventListener('scroll', handleScroll);
+    });
 </script>
 
 <style scoped>
-    body {
-        padding-bottom: 4rem; /* 確保內容不被固定的 footer 遮擋 */
-    }
+    /* 移除 body 的 padding-bottom，因為 footer 不再固定在底部 */
 </style>

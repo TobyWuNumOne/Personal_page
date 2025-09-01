@@ -41,7 +41,7 @@
                     to="/"
                     :class="[
                         'block md:inline-block px-4 py-3 no-underline text-grey-darkest dark:text-white hover:text-grey-darker dark:hover:text-gray-300',
-                        route.path === '/' ? 'font-bold' : ''
+                        route.path === '/' ? 'font-bold' : '',
                     ]"
                 >
                     Home
@@ -53,7 +53,7 @@
                     to="/profile"
                     :class="[
                         'block md:inline-block px-4 py-3 no-underline text-grey-darkest dark:text-white hover:text-grey-darker dark:hover:text-gray-300',
-                        route.path === '/profile' ? 'font-bold' : ''
+                        route.path === '/profile' ? 'font-bold' : '',
                     ]"
                 >
                     Profile
@@ -62,10 +62,22 @@
 
             <li class="border-t md:border-none">
                 <Router-link
+                    to="/myproject"
+                    :class="[
+                        'block md:inline-block px-4 py-3 no-underline text-grey-darkest dark:text-white hover:text-grey-darker dark:hover:text-gray-300',
+                        route.path === '/myproject' ? 'font-bold' : '',
+                    ]"
+                >
+                    My Project
+                </Router-link>
+            </li>
+
+            <li class="border-t md:border-none">
+                <Router-link
                     to="/blog/"
                     :class="[
                         'block md:inline-block px-4 py-3 no-underline text-grey-darkest dark:text-white hover:text-grey-darker dark:hover:text-gray-300',
-                        route.path === '/blog/' ? 'font-bold' : ''
+                        route.path === '/blog/' ? 'font-bold' : '',
                     ]"
                 >
                     Blog
