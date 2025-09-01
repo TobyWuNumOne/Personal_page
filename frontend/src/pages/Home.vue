@@ -13,7 +13,7 @@
     import lineLight from '@/assets/icon/line.svg';
     import lineDark from '@/assets/icon/line.png';
 
-    import { useTheme } from '@/composables/useTheme';
+    import { useTheme } from '@/composables/UseTheme';
     const { theme } = useTheme();
 </script>
 <template>
