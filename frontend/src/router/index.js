@@ -16,9 +16,14 @@ const routes = [
         component: Profile,
     },
     {
-        path: '/MyProject',
+        path: '/myproject',
         name: 'MyProject',
         component: MyProject,
+    },
+    {
+        path: '/myproject/:slug',
+        name: 'ProjectDetail',
+        component: () => import('@/pages/ProjectDetail.vue'),
     },
     {
         path: '/blog',

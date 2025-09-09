@@ -1,6 +1,53 @@
 <script setup>
+    import { ref, onMounted } from 'vue';
     import Footer from '@/components/baseic/Footer.vue';
     import Navbar from '@/components/baseic/Navbar.vue';
+    import { pb } from '@/composables/usePB';
+
+    const projects = ref([]);
+    const isLoading = ref(true);
+    const error = ref(null);
+
+    const loadProjects = async () => {
+        try {
+            isLoading.value = true;
+            // 直接使用 pb 來載入專案並擴展關聯資料
+            const data = await pb.collection('projects').getFullList({
+                filter: 'published=true',
+                sort: '-created',
+                expand: 'skills,tags,gallery'
+            });
+            projects.value = data;
+        } catch (err) {
+            error.value = err;
+            console.error('Failed to load projects:', err);
+        } finally {
+            isLoading.value = false;
+        }
+    };
+
+    // 獲取圖片 URL（用於專案封面）
+    const getImageUrl = (project, filename) => {
+        if (!filename) return null;
+        return `https://cms.taizanthebar.com/api/files/projects/${project.id}/${filename}`;
+    };
+
+    // 生成漸變背景（如果沒有封面圖片）
+    const getGradientClass = (index) => {
+        const gradients = [
+            'from-blue-500 to-purple-600',
+            'from-green-500 to-teal-600',
+            'from-pink-500 to-rose-600',
+            'from-yellow-500 to-orange-600',
+            'from-indigo-500 to-blue-600',
+            'from-purple-500 to-pink-600'
+        ];
+        return gradients[index % gradients.length];
+    };
+
+    onMounted(() => {
+        loadProjects();
+    });
 </script>
 
 <template>
@@ -13,91 +60,79 @@
                         我的專案
                     </h1>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- 專案卡片 1 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-48 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
-                                    個人網站
-                                </h3>
-                                <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                    使用 Vue 3 + Vite + Tailwind CSS 建構的響應式個人網站
-                                </p>
-                                <div class="flex flex-wrap gap-2 mb-4">
-                                    <span class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">Vue 3</span>
-                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">Vite</span>
-                                    <span class="px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded-full">Tailwind</span>
-                                </div>
-                                <div class="flex space-x-4">
-                                    <a href="#" class="text-blue-600 hover:text-blue-800 dark:text-blue-400">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
-                                            <path d="M5 5a2 2 0 00-2 2v6a2 2 0 002 2h6a2 2 0 002-2v-2a1 1 0 10-2 0v2H5V7h2a1 1 0 000-2H5z"></path>
-                                        </svg>
-                                    </a>
-                                    <a href="https://github.com/TobyWuNumOne" class="text-blue-600 hover:text-blue-800 dark:text-blue-400">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- 載入中 -->
+                    <div v-if="isLoading" class="text-center">
+                        <div class="text-xl">載入專案中...</div>
+                    </div>
 
-                        <!-- 專案卡片 2 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-48 bg-gradient-to-r from-green-500 to-teal-600"></div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
-                                    揪團系統
-                                </h3>
-                                <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                    線上揪團活動管理平台，讓朋友們更容易組織聚會
-                                </p>
-                                <div class="flex flex-wrap gap-2 mb-4">
-                                    <span class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">JavaScript</span>
-                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-sm rounded-full">Node.js</span>
-                                </div>
-                                <div class="flex space-x-4">
-                                    <a href="//grup_order.taizanthebar.com" target="_blank" class="text-blue-600 hover:text-blue-800 dark:text-blue-400">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
-                                            <path d="M5 5a2 2 0 00-2 2v6a2 2 0 002 2h6a2 2 0 002-2v-2a1 1 0 10-2 0v2H5V7h2a1 1 0 000-2H5z"></path>
-                                        </svg>
-                                    </a>
-                                    <a href="https://github.com/TobyWuNumOne" class="text-blue-600 hover:text-blue-800 dark:text-blue-400">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- 錯誤訊息 -->
+                    <div v-else-if="error" class="text-center text-red-500">
+                        <div class="text-xl">載入專案失敗</div>
+                        <button @click="loadProjects" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                            重新載入
+                        </button>
+                    </div>
 
-                        <!-- 專案卡片 3 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-48 bg-gradient-to-r from-pink-500 to-rose-600"></div>
+                    <!-- 專案列表 -->
+                    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div 
+                            v-for="(project, index) in projects" 
+                            :key="project.id"
+                            class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+                            @click="$router.push(`/myproject/${project.slug}`)"
+                        >
+                            <!-- 專案封面 -->
+                            <div 
+                                v-if="project.gallery && project.gallery.length > 0"
+                                class="h-48 bg-cover bg-center"
+                                :style="{ backgroundImage: `url(${getImageUrl(project, project.gallery[0])})` }"
+                            ></div>
+                            <div 
+                                v-else
+                                :class="`h-48 bg-gradient-to-r ${getGradientClass(index)}`"
+                            ></div>
+                            
                             <div class="p-6">
                                 <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">
-                                    即將推出
+                                    {{ project.title }}
                                 </h3>
                                 <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                    正在開發中的新專案，敬請期待...
+                                    {{ project.excerpt || '點擊查看詳細資訊...' }}
                                 </p>
-                                <div class="flex flex-wrap gap-2 mb-4">
-                                    <span class="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full">Coming Soon</span>
-                                </div>
-                                <div class="flex space-x-4">
-                                    <span class="text-gray-400">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
-                                            <path d="M5 5a2 2 0 00-2 2v6a2 2 0 002 2h6a2 2 0 002-2v-2a1 1 0 10-2 0v2H5V7h2a1 1 0 000-2H5z"></path>
-                                        </svg>
+                                
+                                <!-- 技能標籤 -->
+                                <div v-if="project.expand?.skills?.length > 0" class="flex flex-wrap gap-2 mb-4">
+                                    <span 
+                                        v-for="skill in project.expand.skills.slice(0, 3)" 
+                                        :key="skill.id"
+                                        class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full"
+                                    >
+                                        {{ skill.name }}
+                                    </span>
+                                    <span 
+                                        v-if="project.expand.skills.length > 3"
+                                        class="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full"
+                                    >
+                                        +{{ project.expand.skills.length - 3 }}
                                     </span>
                                 </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-500">
+                                        點擊查看詳情
+                                    </span>
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- 空狀態 -->
+                    <div v-if="!isLoading && !error && projects.length === 0" class="text-center text-gray-500">
+                        <div class="text-xl mb-4">還沒有專案資料</div>
+                        <p>請先在 CMS 中新增一些專案。</p>
                     </div>
                 </div>
             </div>
