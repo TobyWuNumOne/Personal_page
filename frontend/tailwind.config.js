@@ -62,5 +62,5 @@ export default {
     },
 
     // === Plugin 可加 DaisyUI / Flowbite / Typography 等 ===
-    plugins: [],
+    plugins: [require('@tailwindcss/typography')],
 };
