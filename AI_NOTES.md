@@ -1,4 +1,11 @@
-# AI Notes — 個人網站（PocketBase + Railway + Vercel）
+# AI Notes — 個人網站（Pocke-   [x] 前端安裝 pocketbase SDK 並建立 `usePB.ts`
+-   [x] 設定公開可讀規則：site_settings/tags/skills/media_assets（List/View = true）
+-   [x] 手動測試公開 API（/api/collections/{collection}/records 是否可讀）
+-   [x] Navbar 改讀 `site_settings.nav`
+-   [x] MyProject 改讀 `projects` collection（含 skills/tags 展開）
+-   [x] 新增 ProjectDetail 頁面（支援 Markdown 渲染）
+-   [x] Profile 改讀 `site_settings` + `pages` (slug="about")（混合模式 + Markdown）
+-   [ ] Blog 改讀 `posts` collectionRailway + Vercel）
 
 > 單一真相來源（SSOT）給 Cody / 助理 AI / Copilot 共同參考 以便於未來的維護和開發。
 
@@ -25,8 +32,10 @@
 -   [x] 設定公開可讀規則：site_settings/tags/skills/media_assets（List/View = true）
 -   [x] 手動測試公開 API（/api/collections/{collection}/records 是否可讀）
 -   [x] Navbar 改讀 `site_settings.nav`
--   [ ] Home/About 改讀 `pages`
--   [ ] Projects/Posts 列表頁接資料
+-   [x] MyProject 改讀 `projects` collection（含 skills/tags 展開）
+-   [x] 新增 ProjectDetail 頁面（支援 Markdown 渲染）
+-   [ ] Profile/About 改讀 `pages`
+-   [ ] Blog 改讀 `posts` collection
 
 ## 🚀 前端 API 整合計劃
 
@@ -40,19 +49,19 @@
 ### **Phase 2: 內容頁面**
 
 - [ ] Home.vue：改讀 `pages` (slug="home") + `site_settings.links`
-- [ ] Profile.vue：改讀 `pages` (slug="about")
+- [x] Profile.vue：改讀 `site_settings` + `pages` (slug="about")（混合模式 + Markdown + 技能整合）
 - [ ] 處理 Markdown/HTML 內容渲染
 
 ### **Phase 3: 動態列表**
 
-- [ ] MyProject.vue：改讀 `projects` collection
+- [x] MyProject.vue：改讀 `projects` collection
 - [ ] Blog.vue：改讀 `posts` collection
-- [ ] 新增 skills/tags 顯示
+- [x] 新增 skills/tags 顯示
 - [ ] 新增分頁功能
 
 ### **Phase 4: 進階功能**
 
-- [ ] 新增個別專案/文章頁面
+- [x] 新增個別專案/文章頁面
 - [ ] 圖片最佳化與 lazy loading
 - [ ] SEO meta tags 整合
 - [ ] 搜尋與篩選功能
