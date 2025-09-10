@@ -34,9 +34,7 @@
                     ></div>
                     <div class="profile-names text-center lg:text-left">
                         <h1 class="username text-3xl font-bold">Cody Wu</h1>
-                        <small class="page-title text-gray-500"
-                            >TaiZanLer</small
-                        >
+                        <small class="page-title text-gray-500">Dreamer</small>
                     </div>
                 </div>
                 <div class="w-full lg:w-1/2 flex flex-col items-center">
