@@ -1,41 +1,35 @@
-# AI Notes — 個人網站（Pocke-   [x] 前端安裝 pocketbase SDK 並建立 `usePB.ts`
--   [x] 設定公開可讀規則：site_settings/tags/skills/media_assets（List/View = true）
--   [x] 手動測試公開 API（/api/collections/{collection}/records 是否可讀）
--   [x] Navbar 改讀 `site_settings.nav`
--   [x] MyProject 改讀 `projects` collection（含 skills/tags 展開）
--   [x] 新增 ProjectDetail 頁面（支援 Markdown 渲染）
--   [x] Profile 改讀 `site_settings` + `pages` (slug="about")（混合模式 + Markdown）
--   [ ] Blog 改讀 `posts` collectionRailway + Vercel）
+# AI Notes — 個人網站（PocketBase + Railway + Vercel）
 
 > 單一真相來源（SSOT）給 Cody / 助理 AI / Copilot 共同參考 以便於未來的維護和開發。
 
 ## 🟢 Now / 🔜 Next / 🧱 Blockers
 
--   **Now**: PocketBase 已上線；collections 匯入完成（pages/posts/projects/tags/skills/media_assets/site_settings）；pages/posts/projects 已套用 preview token 規則
--   **Next**:
-    1. 設定公開可讀規則：site_settings/tags/skills/media_assets（List/View = true）
-    2. 填充測試資料（site_settings 一筆、pages: home/about、projects/posts 各 1–2 筆）
-    3. 前端頁面改讀 CMS（Phase 1: Navbar → Phase 2: Home/Profile → Phase 3: Projects/Posts）
--   **Blockers**: （無）
+- **Now**: PocketBase 已上線；collections 匯入完成（pages/posts/projects/tags/skills/media_assets/site_settings）；頁面整合完成度約 80%
+- **Next**: 
+  1. Blog.vue 改讀 `posts` collection
+  2. Home.vue 改讀 `pages` (slug="home") + `site_settings.links`
+  3. 新增部落格文章詳細頁面
+- **Blockers**: （無）
 
 ## ✅ Tasks
 
--   [x] Railway 部署 PocketBase（含 Volume）
--   [x] 自訂網域 cms.taizanthebar.com
--   [x] 匯入最小 collections
--   [x] 設定 pages/posts/projects 的 preview token 規則（List/View）
--   [ ] 填 `site_settings` 第一筆資料（nav/links/logo）
--   [ ] 建 `pages: home/about`
--   [ ] 建 `projects` 2 筆（含封面/skills/tags）
--   [ ] 建 `posts` 2 篇（含 tags）
--   [x] 前端安裝 pocketbase SDK 並建立 `usePB.ts`
--   [x] 設定公開可讀規則：site_settings/tags/skills/media_assets（List/View = true）
--   [x] 手動測試公開 API（/api/collections/{collection}/records 是否可讀）
--   [x] Navbar 改讀 `site_settings.nav`
--   [x] MyProject 改讀 `projects` collection（含 skills/tags 展開）
--   [x] 新增 ProjectDetail 頁面（支援 Markdown 渲染）
--   [ ] Profile/About 改讀 `pages`
--   [ ] Blog 改讀 `posts` collection
+- [x] Railway 部署 PocketBase（含 Volume）
+- [x] 自訂網域 cms.taizanthebar.com
+- [x] 匯入最小 collections
+- [x] 設定 pages/posts/projects 的 preview token 規則（List/View）
+- [x] 填 `site_settings` 第一筆資料（nav/links/logo + skills relation）
+- [x] 建 `pages: about`（含 Markdown 內容）
+- [x] 建 `projects` 1 筆（含封面/skills/tags）
+- [ ] 建 `posts` 2 篇（含 tags）
+- [x] 前端安裝 pocketbase SDK 並建立 `usePB.ts`
+- [x] 設定公開可讀規則：site_settings/tags/skills/media_assets（List/View = true）
+- [x] 手動測試公開 API（/api/collections/{collection}/records 是否可讀）
+- [x] Navbar 改讀 `site_settings.nav`
+- [x] MyProject 改讀 `projects` collection（含 skills/tags/gallery 展開）
+- [x] 新增 ProjectDetail 頁面（支援 Markdown 渲染）
+- [x] Profile 改讀 `site_settings` + `pages` (slug="about")（混合模式 + Markdown）
+- [x] 修正 MyProject 圖片顯示問題（gallery expand）
+- [ ] Blog 改讀 `posts` collection
 
 ## 🚀 前端 API 整合計劃
 
@@ -49,19 +43,20 @@
 ### **Phase 2: 內容頁面**
 
 - [ ] Home.vue：改讀 `pages` (slug="home") + `site_settings.links`
-- [x] Profile.vue：改讀 `site_settings` + `pages` (slug="about")（混合模式 + Markdown + 技能整合）
-- [ ] 處理 Markdown/HTML 內容渲染
+- [x] Profile.vue：改讀 `site_settings` + `pages` (slug="about")（混合模式 + Markdown + 技能整合 + Tailwind Typography）
+- [x] 處理 Markdown/HTML 內容渲染（marked + @tailwindcss/typography）
 
 ### **Phase 3: 動態列表**
 
-- [x] MyProject.vue：改讀 `projects` collection
+- [x] MyProject.vue：改讀 `projects` collection（含 gallery 圖片顯示修正）
 - [ ] Blog.vue：改讀 `posts` collection
 - [x] 新增 skills/tags 顯示
 - [ ] 新增分頁功能
 
 ### **Phase 4: 進階功能**
 
-- [x] 新增個別專案/文章頁面
+- [x] 新增個別專案/文章頁面（ProjectDetail.vue 完成）
+- [x] Markdown 渲染與樣式（深色模式支援）
 - [ ] 圖片最佳化與 lazy loading
 - [ ] SEO meta tags 整合
 - [ ] 搜尋與篩選功能
@@ -79,8 +74,12 @@
 
 ## 📝 Notes / Learnings
 
--   Relation 欄位需先建立目標 collection 才能選；避免手動步驟可用 `Import collections`
--   Import 格式需含 `id/system/presentable/options` 等欄位，否則報 `Invalid collections configuration`
+- Relation 欄位需先建立目標 collection 才能選；避免手動步驟可用 `Import collections`
+- Import 格式需含 `id/system/presentable/options` 等欄位，否則報 `Invalid collections configuration`
+- **Expand 功能重要性**：relation 欄位必須使用 `expand` 參數才能取得關聯資料，例如 `expand=skills,tags,gallery`
+- **Markdown 渲染設定**：需安裝 `@tailwindcss/typography` 並配置 `prose` 類別才能正確顯示
+- **圖片 URL 結構**：media_assets 的圖片 URL 格式為 `https://cms.taizanthebar.com/api/files/media_assets/[id]/[filename]`
+- **Mixed Data Source Pattern**：Profile 頁面成功實現混合資料來源（site_settings + pages），提供靈活的內容管理方式
 
 ## 🔗 Links
 
@@ -90,8 +89,11 @@
 
 ## 🗓 Changelog
 
--   2025-09-08 — PocketBase 上線、最小 collections 匯入完成
--   2025-09-08 — 新增 AI_NOTES.md；為 pages/posts/projects 加上預覽規則（previewToken / previewTokenExpiresAt）
+- 2025-09-08 — PocketBase 上線、最小 collections 匯入完成
+- 2025-09-08 — 新增 AI_NOTES.md；為 pages/posts/projects 加上預覽規則（previewToken / previewTokenExpiresAt）
+- 2025-09-09 — Navbar、MyProject、ProjectDetail 頁面 API 整合完成
+- 2025-09-09 — 新增 site_settings skills relation；填充測試資料（技能、專案、關於頁面）
+- 2025-09-10 — Profile 頁面混合模式完成；修正 MyProject 圖片顯示；安裝 Tailwind Typography
 -   Export collections
 
 ```json
