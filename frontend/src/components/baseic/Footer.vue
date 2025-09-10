@@ -55,11 +55,6 @@
                 class="block text-sm text-gray-500 sm:text-center dark:text-gray-400"
                 >© 2025 太讚了吧. All Rights Reserved.</span
             >
-            <p
-                class="block text-sm text-gray-500 sm:text-center dark:text-gray-400"
-            >
-                I Love Lia !!!!
-            </p>
         </div>
     </footer>
 </template>

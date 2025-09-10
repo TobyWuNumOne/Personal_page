@@ -27,9 +27,9 @@
     };
 
     // 獲取圖片 URL（用於專案封面）
-    const getImageUrl = (project, filename) => {
-        if (!filename) return null;
-        return `https://cms.taizanthebar.com/api/files/projects/${project.id}/${filename}`;
+    const getImageUrl = (mediaItem, filename) => {
+        if (!filename || !mediaItem) return null;
+        return `https://cms.taizanthebar.com/api/files/${mediaItem.collectionName}/${mediaItem.id}/${filename}`;
     };
 
     // 生成漸變背景（如果沒有封面圖片）
@@ -83,9 +83,9 @@
                         >
                             <!-- 專案封面 -->
                             <div 
-                                v-if="project.gallery && project.gallery.length > 0"
+                                v-if="project.expand?.gallery && project.expand.gallery.length > 0"
                                 class="h-48 bg-cover bg-center"
-                                :style="{ backgroundImage: `url(${getImageUrl(project, project.gallery[0])})` }"
+                                :style="{ backgroundImage: `url(${getImageUrl(project.expand.gallery[0], project.expand.gallery[0].file)})` }"
                             ></div>
                             <div 
                                 v-else
