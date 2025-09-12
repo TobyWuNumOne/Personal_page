@@ -39,11 +39,11 @@
             loading.value = true;
             error.value = '';
 
-            // 載入網站設定（含技能）
+            // 載入網站設定（含技能和興趣）
             const settingsData = await pb
                 .collection('site_settings')
                 .getFirstListItem('', {
-                    expand: 'skills',
+                    expand: 'skills,habbet',
                 });
             siteSettings.value = settingsData;
 
@@ -229,7 +229,7 @@
                                         技能
                                     </h3>
                                     <div
-                                        class="grid grid-cols-2 md:grid-cols-3 gap-4"
+                                        class="grid grid-cols-6 md:grid-cols-6 gap-2"
                                     >
                                         <div
                                             v-for="skill in siteSettings?.expand
@@ -255,6 +255,46 @@
                                                 class="text-sm text-gray-600 dark:text-gray-300"
                                             >
                                                 {{ skill.name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 興趣 -->
+                                <div
+                                    class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6"
+                                >
+                                    <h3
+                                        class="text-xl font-bold text-gray-800 dark:text-white mb-4"
+                                    >
+                                        興趣
+                                    </h3>
+                                    <div
+                                        class="grid grid-cols-6 md:grid-cols-6 gap-2"
+                                    >
+                                        <div
+                                            v-for="habbet in siteSettings
+                                                ?.expand?.habbet"
+                                            :key="habbet.id"
+                                            class="text-center"
+                                        >
+                                            <div
+                                                class="w-16 h-16 mx-auto mb-2 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center"
+                                            >
+                                                <span
+                                                    class="text-green-600 dark:text-green-300 font-bold text-xs"
+                                                >
+                                                    {{
+                                                        habbet.name.substring(
+                                                            0,
+                                                            4
+                                                        )
+                                                    }}
+                                                </span>
+                                            </div>
+                                            <p
+                                                class="text-sm text-gray-600 dark:text-gray-300"
+                                            >
+                                                {{ habbet.name }}
                                             </p>
                                         </div>
                                     </div>
