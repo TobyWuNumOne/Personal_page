@@ -4,7 +4,7 @@
 
 ## 🟢 Now / 🔜 Next / 🧱 Blockers
 
-- **Now**: PocketBase 已上線；collections 匯入完成（pages/posts/projects/tags/skills/media_assets/site_settings）；頁面整合完成度約 80%
+- **Now**: PocketBase 已上線；collections 匯入完成（pages/posts/projects/tags/skills/media_assets/site_settings）；頁面整合完成度約 85%
 - **Next**: 
   1. Blog.vue 改讀 `posts` collection
   2. Home.vue 改讀 `pages` (slug="home") + `site_settings.links`
@@ -26,9 +26,10 @@
 - [x] 手動測試公開 API（/api/collections/{collection}/records 是否可讀）
 - [x] Navbar 改讀 `site_settings.nav`
 - [x] MyProject 改讀 `projects` collection（含 skills/tags/gallery 展開）
-- [x] 新增 ProjectDetail 頁面（支援 Markdown 渲染）
+- [x] 新增個別專案/文章頁面（ProjectDetail.vue 完成）
 - [x] Profile 改讀 `site_settings` + `pages` (slug="about")（混合模式 + Markdown）
 - [x] 修正 MyProject 圖片顯示問題（gallery expand）
+- [x] Profile 頭像整合 PocketBase 圖片 API（pages.picture → media_assets）
 - [ ] Blog 改讀 `posts` collection
 
 ## 🚀 前端 API 整合計劃
@@ -80,6 +81,7 @@
 - **Markdown 渲染設定**：需安裝 `@tailwindcss/typography` 並配置 `prose` 類別才能正確顯示
 - **圖片 URL 結構**：media_assets 的圖片 URL 格式為 `https://cms.taizanthebar.com/api/files/media_assets/[id]/[filename]`
 - **Mixed Data Source Pattern**：Profile 頁面成功實現混合資料來源（site_settings + pages），提供靈活的內容管理方式
+- **Profile 頭像動態載入**：透過 pages.picture 關聯 media_assets，實現頭像從 CMS 動態載入，支援預設頭像 fallback 機制
 
 ## 🔗 Links
 
@@ -93,7 +95,7 @@
 - 2025-09-08 — 新增 AI_NOTES.md；為 pages/posts/projects 加上預覽規則（previewToken / previewTokenExpiresAt）
 - 2025-09-09 — Navbar、MyProject、ProjectDetail 頁面 API 整合完成
 - 2025-09-09 — 新增 site_settings skills relation；填充測試資料（技能、專案、關於頁面）
-- 2025-09-10 — Profile 頁面混合模式完成；修正 MyProject 圖片顯示；安裝 Tailwind Typography
+- 2025-09-12 — Profile 頭像整合完成：實現從 pages.picture 關聯載入 media_assets 圖片，支援動態頭像顯示
 -   Export collections
 
 ```json
