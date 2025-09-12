@@ -84,13 +84,35 @@
                             <!-- 專案封面 -->
                             <div 
                                 v-if="project.expand?.gallery && project.expand.gallery.length > 0"
-                                class="h-48 bg-cover bg-center"
+                                class="h-48 bg-cover bg-center relative"
                                 :style="{ backgroundImage: `url(${getImageUrl(project.expand.gallery[0], project.expand.gallery[0].file)})` }"
-                            ></div>
+                            >
+                                <!-- 影片指示圖標 -->
+                                <div 
+                                    v-if="project.youtube"
+                                    class="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full shadow-lg"
+                                    title="包含影片"
+                                >
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 6a2 2 0 012-2h6l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path>
+                                    </svg>
+                                </div>
+                            </div>
                             <div 
                                 v-else
-                                :class="`h-48 bg-gradient-to-r ${getGradientClass(index)}`"
-                            ></div>
+                                :class="`h-48 bg-gradient-to-r ${getGradientClass(index)} relative`"
+                            >
+                                <!-- 影片指示圖標（無封面時） -->
+                                <div 
+                                    v-if="project.youtube"
+                                    class="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full shadow-lg"
+                                    title="包含影片"
+                                >
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 6a2 2 0 012-2h6l2 2h6a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path>
+                                    </svg>
+                                </div>
+                            </div>
                             
                             <div class="p-6">
                                 <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">

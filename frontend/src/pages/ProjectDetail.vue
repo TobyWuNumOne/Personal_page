@@ -119,6 +119,17 @@
                         </div>
                     </div>
 
+                    <!-- YouTube 影片 -->
+                    <div v-if="project.youtube" class="mb-8">
+                        <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">專案影片</h2>
+                        <div class="aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+                            <div 
+                                v-html="project.youtube"
+                                class="w-full h-full [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0"
+                            ></div>
+                        </div>
+                    </div>
+
                     <!-- 專案內容 -->
                     <div v-if="project.body" class="prose prose-lg dark:prose-invert max-w-none mb-8">
                         <div 

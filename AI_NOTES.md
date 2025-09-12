@@ -4,7 +4,7 @@
 
 ## 🟢 Now / 🔜 Next / 🧱 Blockers
 
-- **Now**: PocketBase 已上線；collections 匯入完成（pages/posts/projects/tags/skills/media_assets/site_settings）；頁面整合完成度約 85%
+- **Now**: PocketBase 已上線；collections 匯入完成（pages/posts/projects/tags/skills/media_assets/site_settings）；頁面整合完成度約 90%
 - **Next**: 
   1. Blog.vue 改讀 `posts` collection
   2. Home.vue 改讀 `pages` (slug="home") + `site_settings.links`
@@ -30,6 +30,7 @@
 - [x] Profile 改讀 `site_settings` + `pages` (slug="about")（混合模式 + Markdown）
 - [x] 修正 MyProject 圖片顯示問題（gallery expand）
 - [x] Profile 頭像整合 PocketBase 圖片 API（pages.picture → media_assets）
+- [x] 專案 YouTube 影片嵌入功能（ProjectDetail + MyProject 影片指示）
 - [ ] Blog 改讀 `posts` collection
 
 ## 🚀 前端 API 整合計劃
@@ -82,6 +83,7 @@
 - **圖片 URL 結構**：media_assets 的圖片 URL 格式為 `https://cms.taizanthebar.com/api/files/media_assets/[id]/[filename]`
 - **Mixed Data Source Pattern**：Profile 頁面成功實現混合資料來源（site_settings + pages），提供靈活的內容管理方式
 - **Profile 頭像動態載入**：透過 pages.picture 關聯 media_assets，實現頭像從 CMS 動態載入，支援預設頭像 fallback 機制
+- **YouTube 影片嵌入**：projects.youtube 文字欄位儲存 iframe 程式碼，ProjectDetail 使用 v-html 安全渲染，MyProject 顯示影片指示圖標
 
 ## 🔗 Links
 
@@ -96,6 +98,7 @@
 - 2025-09-09 — Navbar、MyProject、ProjectDetail 頁面 API 整合完成
 - 2025-09-09 — 新增 site_settings skills relation；填充測試資料（技能、專案、關於頁面）
 - 2025-09-12 — Profile 頭像整合完成：實現從 pages.picture 關聯載入 media_assets 圖片，支援動態頭像顯示
+- 2025-09-12 — 專案 YouTube 影片嵌入功能完成：projects.youtube 欄位 + ProjectDetail 影片區段 + MyProject 影片指示圖標
 -   Export collections
 
 ```json
