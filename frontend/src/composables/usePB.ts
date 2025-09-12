@@ -32,14 +32,14 @@ export async function listProjects() {
     }
 }
 
-export async function listPosts() {
+export async function listRollingItems() {
     try {
-        return await pb.collection('posts').getFullList({
+        return await pb.collection('rolling_items').getFullList({
             filter: 'published=true',
-            sort: '-created',
+            sort: 'order,created',
         });
     } catch (error) {
-        console.error('Failed to fetch posts:', error);
+        console.error('Failed to fetch rolling items:', error);
         return [];
     }
 }

@@ -1,6 +1,7 @@
 <script setup>
     import Footer from '@/components/baseic/Footer.vue';
     import Navbar from '@/components/baseic/Navbar.vue';
+    import Rolling from '@/components/Rolling.vue';
 
     import instagramLight from '@/assets/icon/instagram.svg';
     import instagramDark from '@/assets/icon/instagram.png';
@@ -111,6 +112,7 @@
                     </figure>
                 </div>
             </div>
+            <Rolling />
         </div>
         <Footer />
     </div>
