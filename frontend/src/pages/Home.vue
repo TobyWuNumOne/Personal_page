@@ -24,7 +24,7 @@
             class="flex-grow bg-background-light text-text dark:bg-background-dark dark:text-text-light transition-colors duration-500 pb-4"
         >
             <div
-                class="container mx-auto flex flex-col lg:flex-row items-center lg:justify-around py-12"
+                class="max-w-7xl px-4 sm:px-6 mx-auto lg:px-8 flex flex-col lg:flex-row items-center lg:justify-around py-12"
             >
                 <!-- Profile Header Start -->
                 <div

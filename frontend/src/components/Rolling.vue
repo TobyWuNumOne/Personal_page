@@ -129,7 +129,7 @@
     >
         <section class="py-3">
             <p
-                class="mt-2 px-28 text-4xl font-medium tracking-tighter text-text dark:text-text-light transition-colors duration-500"
+                class="mt-2 text-4xl font-medium tracking-tighter text-text dark:text-text-light transition-colors duration-500"
             >
                 最近在幹嘛
             </p>
@@ -145,13 +145,13 @@
                     <div
                         v-if="rollingItems.length > 0"
                         id="carousel"
-                        class="relative scrollbar-hide flex w-full snap-x snap-mandatory scroll-pl-28 scroll-pr-8 gap-8 overflow-x-auto overscroll-x-contain"
+                        class="relative scrollbar-hide flex w-full snap-x snap-mandatory scroll-pl-0 scroll-pr-8 gap-8 overflow-x-auto overscroll-x-contain"
                     >
                         <!-- 動態渲染項目 -->
                         <div
                             v-for="item in rollingItems"
                             :key="item.id"
-                            class="carousel-item relative flex aspect-[3/4] w-96 shrink-0 snap-start flex-col justify-end overflow-hidden rounded-3xl shadow-lg bg-white dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-700 transition-colors duration-500"
+                            class="carousel-item relative flex aspect-[4/5] w-80 sm:w-80 md:w-84 lg:w-96 shrink-0 snap-start flex-col justify-end overflow-hidden rounded-3xl shadow-lg bg-white dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-700 transition-colors duration-500"
                         >
                             <!-- Instagram 類型 -->
                             <div
@@ -359,7 +359,7 @@
                 </div>
             </div>
 
-            <div class="mx-28 mt-16 flex justify-center">
+            <div class="mt-16 flex justify-center">
                 <div class="flex gap-x-4 mt-4">
                     <button
                         id="prev"

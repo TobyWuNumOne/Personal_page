@@ -229,7 +229,7 @@
                                         技能
                                     </h3>
                                     <div
-                                        class="grid grid-cols-6 md:grid-cols-6 gap-2"
+                                        class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4"
                                     >
                                         <div
                                             v-for="skill in siteSettings?.expand
@@ -269,7 +269,7 @@
                                         興趣
                                     </h3>
                                     <div
-                                        class="grid grid-cols-6 md:grid-cols-6 gap-2"
+                                        class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4"
                                     >
                                         <div
                                             v-for="habbet in siteSettings
