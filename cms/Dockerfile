@@ -12,16 +12,18 @@ RUN apk add --no-cache wget unzip ca-certificates tzdata \
 
 WORKDIR /pb
 
-COPY start.sh /pb/start.sh
-
-USER pbuser
-
+# 先下載並設置 PocketBase
 RUN wget -q https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip \
   && unzip pocketbase_${PB_VERSION}_linux_amd64.zip \
   && rm pocketbase_${PB_VERSION}_linux_amd64.zip \
-  && chmod +x /pb/pocketbase \
-  && chmod +x /pb/start.sh || true
+  && chmod +x pocketbase \
+  && ls -la pocketbase
+
+COPY start.sh /pb/start.sh
+RUN chmod +x /pb/start.sh
+
+USER pbuser
 
 EXPOSE 8080
 
-CMD ["/bin/sh","-lc","/pb/start.sh"]
+CMD ["/bin/sh", "/pb/start.sh"]
