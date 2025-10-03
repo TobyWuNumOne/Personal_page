@@ -7,8 +7,7 @@ ENV PB_PUBLIC_DIR=/pb/pb_public
 
 RUN apk add --no-cache wget unzip ca-certificates tzdata \
   && adduser -D -H pbuser \
-  && mkdir -p /pb ${PB_DATA_DIR} ${PB_PUBLIC_DIR} \
-  && chown -R pbuser:pbuser /pb
+  && mkdir -p /pb ${PB_DATA_DIR} ${PB_PUBLIC_DIR}
 
 WORKDIR /pb
 
@@ -21,6 +20,9 @@ RUN wget -q https://github.com/pocketbase/pocketbase/releases/download/v${PB_VER
 
 COPY start.sh /pb/start.sh
 RUN chmod +x /pb/start.sh
+
+# 確保 pbuser 擁有所有必要目錄的權限
+RUN chown -R pbuser:pbuser /pb ${PB_DATA_DIR} ${PB_PUBLIC_DIR}
 
 USER pbuser
 
