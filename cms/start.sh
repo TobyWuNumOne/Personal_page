@@ -10,8 +10,9 @@ echo "Data directory permissions: $(ls -ld ${PB_DATA_DIR} 2>/dev/null || echo 'N
 
 # 確保資料目錄存在且有正確權限
 mkdir -p ${PB_DATA_DIR}
-echo "Created data directory, checking permissions again..."
-echo "Data directory permissions: $(ls -ld ${PB_DATA_DIR})"
+echo "Ensuring correct permissions for data directory..."
+chmod 755 ${PB_DATA_DIR}
+echo "Data directory permissions after fix: $(ls -ld ${PB_DATA_DIR})"
 
 # 測試寫入權限
 echo "Testing write permissions..."

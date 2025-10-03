@@ -6,12 +6,11 @@ ENV PB_DATA_DIR=/pb/pb_data
 ENV PB_PUBLIC_DIR=/pb/pb_public
 
 RUN apk add --no-cache wget unzip ca-certificates tzdata \
-  && adduser -D -H pbuser \
   && mkdir -p /pb ${PB_DATA_DIR} ${PB_PUBLIC_DIR}
 
 WORKDIR /pb
 
-# 先下載並設置 PocketBase
+# 下載並設置 PocketBase
 RUN wget -q https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip \
   && unzip pocketbase_${PB_VERSION}_linux_amd64.zip \
   && rm pocketbase_${PB_VERSION}_linux_amd64.zip \
@@ -21,10 +20,8 @@ RUN wget -q https://github.com/pocketbase/pocketbase/releases/download/v${PB_VER
 COPY start.sh /pb/start.sh
 RUN chmod +x /pb/start.sh
 
-# 確保 pbuser 擁有所有必要目錄的權限
-RUN chown -R pbuser:pbuser /pb ${PB_DATA_DIR} ${PB_PUBLIC_DIR}
-
-USER pbuser
+# 移除 USER pbuser - 以 root 身份運行來處理 volume 權限
+# USER pbuser
 
 EXPOSE 8080
 
