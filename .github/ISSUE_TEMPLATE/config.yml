@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Architecture notes
+    url: https://github.com/codyloveyou/personal_page
+    about: Review the repository documentation and architecture before opening an issue.
