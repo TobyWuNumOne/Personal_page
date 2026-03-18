@@ -14,6 +14,14 @@ def require_env(name: str) -> str:
     return value
 
 
+def normalize_base_url(raw: str) -> str:
+    base = raw.rstrip("/")
+    for suffix in ("/api", "/_"):
+        if base.endswith(suffix):
+            base = base[: -len(suffix)]
+    return base
+
+
 def load_updates(raw: str) -> dict[str, Any]:
     try:
         payload = json.loads(raw)
@@ -59,16 +67,33 @@ def authenticate(base_url: str) -> str:
 
     email = require_env("POCKETBASE_SUPERUSER_EMAIL")
     password = require_env("POCKETBASE_SUPERUSER_PASSWORD")
-    auth_url = f"{base_url}/api/collections/_superusers/auth-with-password"
-    auth = make_request(
-        "POST",
-        auth_url,
-        payload={"identity": email, "password": password},
-    )
-    auth_token = auth.get("token")
-    if not auth_token:
-        raise RuntimeError("PocketBase auth response did not include a token")
-    return f"Bearer {auth_token}"
+    auth_candidates = [
+        (
+            f"{base_url}/api/collections/_superusers/auth-with-password",
+            {"identity": email, "password": password},
+        ),
+        (
+            f"{base_url}/api/admins/auth-with-password",
+            {"identity": email, "password": password},
+        ),
+        (
+            f"{base_url}/api/admins/auth-with-password",
+            {"email": email, "password": password},
+        ),
+    ]
+    errors: list[str] = []
+    for auth_url, payload in auth_candidates:
+        try:
+            auth = make_request("POST", auth_url, payload=payload)
+            auth_token = auth.get("token")
+            if not auth_token:
+                raise RuntimeError("PocketBase auth response did not include a token")
+            return f"Bearer {auth_token}"
+        except RuntimeError as exc:
+            errors.append(f"{auth_url}: {exc}")
+
+    joined = "\n".join(errors)
+    raise RuntimeError(f"PocketBase authentication failed with all known endpoints:\n{joined}")
 
 
 def resolve_record(
@@ -148,7 +173,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     updates = load_updates(args.updates_json)
-    base_url = require_env("POCKETBASE_URL").rstrip("/")
+    base_url = normalize_base_url(require_env("POCKETBASE_URL"))
     token = authenticate(base_url)
     record = resolve_record(base_url, token, args.collection, args.record_id, args.filter)
 
