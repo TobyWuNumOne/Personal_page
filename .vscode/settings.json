@@ -1,0 +1,10 @@
+{
+  "python.defaultInterpreterPath": "/opt/anaconda3/bin/python3",
+  "python.analysis.pythonVersion": "3.13",
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-python.python"
+},
+"python-envs.defaultEnvManager": "ms-python.python:conda",
+"python-envs.defaultPackageManager": "ms-python.python:conda"
+}

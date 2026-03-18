@@ -30,6 +30,12 @@ Describe the expected behavior, UI flow, API flow, or system behavior.
 
 List any known implementation constraints, file paths, services, or dependencies.
 
+## AI Routing Notes
+
+- Use Copilot if this is a small, contained change.
+- Use Codex/manual implementation if this spans multiple subsystems or needs a refactor.
+- Mention if production CMS data must change.
+
 ## Acceptance Criteria
 
 - [ ] The feature works as described

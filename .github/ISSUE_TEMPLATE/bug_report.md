@@ -36,6 +36,12 @@ What should happen instead?
 
 List any known file paths, routes, components, or CMS collections involved.
 
+## AI Routing Notes
+
+- Use Copilot for focused fixes with clear reproduction.
+- Use Codex/manual implementation if the bug crosses frontend, deployment, and CMS boundaries.
+- If production content must be changed, call that out explicitly.
+
 ## Acceptance Criteria
 
 - [ ] The bug is fixed

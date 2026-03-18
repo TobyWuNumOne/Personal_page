@@ -1,0 +1,66 @@
+name: CMS Sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      collection:
+        description: "PocketBase collection name"
+        required: true
+        type: string
+      record_id:
+        description: "PocketBase record ID"
+        required: false
+        type: string
+      filter:
+        description: "Optional PocketBase filter used to find one record"
+        required: false
+        type: string
+      updates_json:
+        description: "JSON object with fields to update"
+        required: true
+        type: string
+      apply:
+        description: "Apply the update. Leave false for preview."
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Preview or apply CMS update
+        env:
+          POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
+          POCKETBASE_SUPERUSER_EMAIL: ${{ secrets.POCKETBASE_SUPERUSER_EMAIL }}
+          POCKETBASE_SUPERUSER_PASSWORD: ${{ secrets.POCKETBASE_SUPERUSER_PASSWORD }}
+          POCKETBASE_SUPERUSER_TOKEN: ${{ secrets.POCKETBASE_SUPERUSER_TOKEN }}
+          CMS_COLLECTION: ${{ inputs.collection }}
+          CMS_RECORD_ID: ${{ inputs.record_id }}
+          CMS_FILTER: ${{ inputs.filter }}
+          CMS_UPDATES_JSON: ${{ inputs.updates_json }}
+          CMS_APPLY: ${{ inputs.apply }}
+        run: |
+          args=(--collection "$CMS_COLLECTION" --updates-json "$CMS_UPDATES_JSON")
+          if [ -n "$CMS_RECORD_ID" ]; then
+            args+=(--record-id "$CMS_RECORD_ID")
+          fi
+          if [ -n "$CMS_FILTER" ]; then
+            args+=(--filter "$CMS_FILTER")
+          fi
+          if [ "$CMS_APPLY" = "true" ]; then
+            args+=(--apply)
+          fi
+          python scripts/cms_sync.py "${args[@]}"

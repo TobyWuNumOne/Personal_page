@@ -32,16 +32,23 @@ List the fields that need to be changed.
 
 Provide the exact new content when possible.
 
-## Requires Code Change?
+## CMS Update Mode
 
 - [ ] Yes
 - [ ] No, CMS update only
+- [ ] Preview only first, then apply in the CMS workflow
 
 ## Acceptance Criteria
 
 - [ ] The requested content is updated correctly
 - [ ] No unrelated content is changed
 - [ ] If applicable, the frontend reflects the new content
+
+## Structured CMS Inputs
+
+- Collection:
+- Record id or filter:
+- JSON field updates:
 
 ## Additional Context
 

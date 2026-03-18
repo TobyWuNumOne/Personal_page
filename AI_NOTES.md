@@ -2,6 +2,13 @@
 
 > 單一真相來源（SSOT）給 Cody / 助理 AI / Copilot 共同參考 以便於未來的維護和開發。
 
+## AI Execution Policy
+
+- GitHub Copilot coding agent 是預設的 issue-to-PR 工具。
+- Codex 用於高複雜度實作、跨檔重構、疑難除錯與 AI/deployment 流程調整。
+- 一般 code PR 不直接更新 production PocketBase。
+- 內容型變更走 `.github/workflows/cms-sync.yml` 與 `scripts/cms_sync.py` 的結構化流程。
+
 ## 🟢 Now / 🔜 Next / 🧱 Blockers
 
 - **Now**: PocketBase 已上線；collections 匯入完成（pages/posts/projects/tags/skills/media_assets/site_settings）；頁面整合完成度約 90%

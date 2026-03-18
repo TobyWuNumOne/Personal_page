@@ -15,6 +15,18 @@ Closes #
 - [ ] Documentation
 - [ ] Deployment or CI
 
+## AI Source
+
+- [ ] GitHub Copilot coding agent
+- [ ] Codex-assisted
+- [ ] Manual only
+
+## Production Data Impact
+
+- [ ] No production data change
+- [ ] Separate CMS workflow required
+- [ ] CMS workflow already executed and verified
+
 ## What Changed
 
 - 
