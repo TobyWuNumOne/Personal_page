@@ -27,9 +27,10 @@
 
 這個 repo 採用「Copilot 主流程，Codex 補位」：
 
-- `GitHub Copilot Agentic Workflows` 處理小型、可審查的 issue-to-PR 工作。
-- `Codex` 由開發者手動介入，用於跨檔重構、複雜除錯、部署與 AI 流程本身的實作。
-- 一般 coding PR 不直接寫 production PocketBase。
+- `GitHub Copilot Agentic Workflows` 處理小型、可審查的 issue-to-PR 工作
+- `Codex` 由開發者手動介入，用於跨檔重構、複雜除錯、部署與 AI 流程本身的實作
+- 一般 coding PR 不直接寫 production PocketBase
+- 目前狀態、待辦與 AI 自動化進度集中維護在 [`AI_NOTES.md`](/Users/codyloveyou/code/personal_page/AI_NOTES.md)
 
 ### Copilot 指引檔
 
@@ -39,6 +40,23 @@
 - CMS 規則：[`cms.instructions.md`](/Users/codyloveyou/code/personal_page/.github/instructions/cms.instructions.md)
 - AI PR 審查基準：[`AI_REVIEW_HEURISTICS.md`](/Users/codyloveyou/code/personal_page/.github/AI_REVIEW_HEURISTICS.md)
 - Agent 共用規則：[`AGENTS.md`](/Users/codyloveyou/code/personal_page/AGENTS.md)
+
+## 使用方式
+
+### 開發 issue -> PR
+
+- 建立或更新標題以 `[Bug]` 或 `[Feature]` 開頭的 issue
+- workflow 會先做 eligibility gate
+- 高風險或模糊 issue 不會自動送進 code workflow，會改由 Codex 或人工處理
+- 合格 issue 會自動指派給 GitHub Copilot coding agent，預期由其建立 PR
+- merge 仍維持人工 review，不做 auto-merge
+
+### Content issue -> CMS preview
+
+- 建立或更新標題以 `[Content]` 開頭的 issue
+- workflow 會從 issue 內的 `Structured CMS Inputs` 解析 `collection`、`record_id` 或 `filter`、`updates_json`
+- 自動執行 preview，並把結果 comment 回 issue
+- 正式寫入仍由你手動執行 `CMS Sync` workflow 並設定 `apply=true`
 
 ## CMS 更新流程
 
@@ -55,38 +73,6 @@
 - 預設支援 preview，再由明確 apply 執行寫入
 - 使用 PocketBase superuser token 或 email/password 驗證
 - 將 CMS 寫入與一般 code PR 分離
-
-### 第一版自動化
-
-- 建立或更新標題以 `[Content]` 開頭的 issue
-- workflow 會從 issue 內的 `Structured CMS Inputs` 解析 `collection`、`record_id` 或 `filter`、`updates_json`
-- 自動執行 preview，並把結果 comment 回 issue
-- 正式寫入仍由你手動執行 `CMS Sync` workflow 並設定 `apply=true`
-
-### 開發 Issue 自動到 PR
-
-- 建立或更新標題以 `[Bug]` 或 `[Feature]` 開頭的 issue
-- workflow 會檢查 issue 是否具備足夠資訊，例如 `Summary`、`Acceptance Criteria` 與對應類型所需欄位
-- 高風險或模糊 issue 不會自動送進 code workflow，會改由 Codex 或人工處理
-- 合格 issue 會自動指派給 GitHub Copilot coding agent，預期由其建立 PR
-- merge 仍維持人工 review，不做 auto-merge
-
-### 目前已完成
-
-- 已移除舊的自製 OpenAI coding pipeline
-- 已建立 repo-wide 與 path-specific Copilot 指引
-- 已建立 `CMS Sync` 手動寫入 workflow
-- 已建立從 content issue 自動產生 CMS preview 的 workflow
-- 已建立從 `[Bug]` / `[Feature]` issue 自動路由到 Copilot coding agent 的 workflow
-- 已實測 `[Bug]` issue 會成功指派給 Copilot，並建立 linked PR 與 Vercel preview deployment
-- 已整理 PocketBase schema/content 參考文件，供 AI 與人工更新時共用
-- 已建立 AI PR review heuristics，供人工審查 Copilot 產出的 PR
-
-### 下一步目標
-
-- 將 `cms_proposal.py` 從 parser 升級為 AI proposal generator
-- 讓 content issue 以自然語言描述需求，由 AI 自動生成 `collection`、`filter` 與 `updates_json`
-- 保持 `preview -> human confirm -> apply` 的安全流程，再逐步評估更高自動化
 
 ### 需要設定的 GitHub Secrets
 
