@@ -46,9 +46,9 @@ Provide the exact new content when possible.
 
 ## Structured CMS Inputs
 
-- Collection:
-- Record id or filter:
-- JSON field updates:
+- Collection: `pages`
+- Record id or filter: `slug="about"`
+- JSON field updates: `{"title":"About Me"}`
 
 ## Additional Context
 

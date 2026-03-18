@@ -1,0 +1,121 @@
+name: CMS Preview From Issue
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+      - reopened
+      - labeled
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  preview:
+    if: contains(join(github.event.issue.labels.*.name, ','), 'content')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Parse issue into CMS proposal
+        id: proposal
+        run: python scripts/cms_proposal.py > cms-proposal.json
+
+      - name: Run CMS preview
+        id: preview
+        env:
+          POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
+          POCKETBASE_SUPERUSER_EMAIL: ${{ secrets.POCKETBASE_SUPERUSER_EMAIL }}
+          POCKETBASE_SUPERUSER_PASSWORD: ${{ secrets.POCKETBASE_SUPERUSER_PASSWORD }}
+          POCKETBASE_SUPERUSER_TOKEN: ${{ secrets.POCKETBASE_SUPERUSER_TOKEN }}
+          CMS_COLLECTION: ${{ steps.proposal.outputs.collection }}
+          CMS_RECORD_ID: ${{ steps.proposal.outputs.record_id }}
+          CMS_FILTER: ${{ steps.proposal.outputs.filter }}
+          CMS_UPDATES_JSON: ${{ steps.proposal.outputs.updates_json }}
+        run: |
+          args=(--collection "$CMS_COLLECTION" --updates-json "$CMS_UPDATES_JSON")
+          if [ -n "$CMS_RECORD_ID" ]; then
+            args+=(--record-id "$CMS_RECORD_ID")
+          fi
+          if [ -n "$CMS_FILTER" ]; then
+            args+=(--filter "$CMS_FILTER")
+          fi
+          python scripts/cms_sync.py "${args[@]}" | tee cms-preview.txt
+
+      - name: Comment preview result on issue
+        if: success()
+        uses: actions/github-script@v7
+        env:
+          CMS_COLLECTION: ${{ steps.proposal.outputs.collection }}
+          CMS_RECORD_ID: ${{ steps.proposal.outputs.record_id }}
+          CMS_FILTER: ${{ steps.proposal.outputs.filter }}
+          CMS_UPDATES_JSON: ${{ steps.proposal.outputs.updates_json }}
+        with:
+          script: |
+            const fs = require('fs');
+            const preview = fs.readFileSync('cms-preview.txt', 'utf8');
+            const recordLine = process.env.CMS_RECORD_ID
+              ? `- record_id: \`${process.env.CMS_RECORD_ID}\``
+              : `- filter: \`${process.env.CMS_FILTER}\``;
+            const body = [
+              'CMS preview generated automatically from this issue.',
+              '',
+              `- collection: \`${process.env.CMS_COLLECTION}\``,
+              recordLine,
+              '',
+              '```json',
+              process.env.CMS_UPDATES_JSON,
+              '```',
+              '',
+              'Preview result:',
+              '',
+              '```text',
+              preview.trim(),
+              '```',
+              '',
+              'To apply the change, run the `CMS Sync` workflow manually with the same inputs and set `apply=true`.'
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body
+            });
+
+      - name: Comment parse or preview failure on issue
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = [
+              'Automatic CMS preview failed for this content issue.',
+              '',
+              'Check that the issue includes these structured fields:',
+              '',
+              '- `Collection`',
+              '- `Record id or filter`',
+              '- `JSON field updates`',
+              '',
+              'Example:',
+              '',
+              '```text',
+              '- Collection: pages',
+              '- Record id or filter: slug="about"',
+              '- JSON field updates: {"title":"About Me"}',
+              '```'
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body
+            });
