@@ -30,6 +30,10 @@ Describe the expected behavior, UI flow, API flow, or system behavior.
 
 List any known implementation constraints, file paths, services, or dependencies.
 
+## Constraints / Non-Goals
+
+List anything the automation should not change as part of this feature.
+
 ## AI Routing Notes
 
 - Use Copilot if this is a small, contained change.
@@ -38,9 +42,9 @@ List any known implementation constraints, file paths, services, or dependencies
 
 ## Acceptance Criteria
 
-- [ ] The feature works as described
-- [ ] Existing flows are not broken
-- [ ] The change is reviewable in a PR
+- [x] The feature works as described
+- [x] Existing flows are not broken
+- [x] The change is reviewable in a PR
 
 ## Additional Context
 

@@ -2,7 +2,6 @@
 name: Content update
 about: Request a PocketBase or site content update
 title: "[Content] "
-labels: ["content"]
 assignees: []
 ---
 
@@ -30,7 +29,7 @@ List the fields that need to be changed.
 
 ## New Content
 
-Provide the exact new content when possible.
+Describe the desired content or provide the exact new content when possible.
 
 ## CMS Update Mode
 
@@ -46,6 +45,8 @@ Provide the exact new content when possible.
 
 ## Structured CMS Inputs
 
+For the current v1 preview flow, these fields are still required so the workflow can prepare a CMS preview automatically.
+
 - Collection: `pages`
 - Record id or filter: `slug="about"`
 - JSON field updates: `{"title":"About Me"}`
@@ -53,3 +54,4 @@ Provide the exact new content when possible.
 ## Additional Context
 
 Add links, screenshots, source text, or notes if needed.
+The long-term goal is for AI to infer these structured fields from natural language, but the current workflow still expects them explicitly.

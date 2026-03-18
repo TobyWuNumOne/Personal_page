@@ -247,6 +247,7 @@
 
 ## 自動 preview issue 格式
 
+目前 v1 流程會在 issue 標題以 `[Content]` 開頭時自動嘗試產生 preview。
 內容型 issue 要讓自動 preview 生效，請在 `Structured CMS Inputs` 區塊保持這種格式：
 
 ```text
@@ -256,3 +257,13 @@
 ```
 
 如果 `JSON field updates` 不可由單行 JSON 表示，可以在 `New Content` 區塊放完整 JSON object。
+
+## 目前自動化階段
+
+- 已完成：`[Content]` issue -> parse structured CMS inputs -> PocketBase preview -> comment back to issue
+- 已完成：手動執行 `CMS Sync` workflow 並以 `apply=true` 套用變更
+- 尚未完成：由 AI 根據自然語言需求自動生成 `collection`、`filter` 與 `updates_json`
+
+因此這份文件目前同時服務兩種用途：
+- 幫人類或 AI 準備正確的 `CMS Sync` 輸入
+- 作為下一版 AI proposal generator 的 schema/context 來源

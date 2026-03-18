@@ -21,6 +21,8 @@ In those cases, leave a clear draft or route the task to Codex/manual review.
 - Frontend work lives under `frontend/`.
 - PocketBase deployment/configuration lives under `cms/`.
 - Structured CMS updates go through the dedicated GitHub workflow, not through ad hoc scripts in PRs.
+- `[Bug]` and `[Feature]` issues are for code automation.
+- `[Content]` issues are for CMS preview/apply, not code PR generation.
 
 ## Validation
 

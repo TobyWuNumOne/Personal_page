@@ -22,6 +22,8 @@ This repository uses GitHub Copilot coding agent for narrow, reviewable work and
 - Copilot is appropriate for docs, copy changes, small UI fixes, focused workflow updates, and contained bugs.
 - Codex should be used manually for multi-file refactors, data-flow redesign, complex debugging, or AI/deployment pipeline work.
 - Do not make destructive changes, schema rewrites, or production data mutations from a general coding PR.
+- `[Bug]` and `[Feature]` issues are the intended entry points for automatic code-to-PR routing.
+- `[Content]` issues are reserved for CMS preview/apply and should not trigger normal coding PR work.
 
 ## Validation
 
@@ -33,5 +35,6 @@ This repository uses GitHub Copilot coding agent for narrow, reviewable work and
 
 - General code-change PRs must not directly update production PocketBase data.
 - PocketBase writes go through the dedicated CMS workflow and require structured inputs.
-- Content issues labeled `content` can auto-generate a CMS preview from the issue body. Keep the issue fields structured and machine-readable.
+- Content issues with titles starting with `[Content]` can auto-generate a CMS preview from the issue body. Keep the issue fields structured and machine-readable.
+- This is a transitional flow: today the issue still provides structured CMS inputs, while the target direction is natural-language content requests that AI converts into a structured proposal before preview/apply.
 - Treat secrets, deployment settings, and production data as high-risk surfaces; minimize changes and explain them clearly in the PR.

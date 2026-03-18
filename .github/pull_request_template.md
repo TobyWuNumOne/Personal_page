@@ -6,6 +6,13 @@ Describe the change in a few sentences.
 
 Closes #
 
+## Automation Route
+
+- [ ] `[Bug]` issue -> Copilot coding agent
+- [ ] `[Feature]` issue -> Copilot coding agent
+- [ ] `[Content]` issue -> CMS workflow
+- [ ] Codex/manual route
+
 ## Change Type
 
 - [ ] Bug fix

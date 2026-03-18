@@ -36,6 +36,10 @@ What should happen instead?
 
 List any known file paths, routes, components, or CMS collections involved.
 
+## Constraints / Non-Goals
+
+List anything the automation should avoid changing.
+
 ## AI Routing Notes
 
 - Use Copilot for focused fixes with clear reproduction.
@@ -44,8 +48,8 @@ List any known file paths, routes, components, or CMS collections involved.
 
 ## Acceptance Criteria
 
-- [ ] The bug is fixed
-- [ ] Existing behavior is not broken
+- [x] The bug is fixed
+- [x] Existing behavior is not broken
 - [ ] If applicable, deployment still works
 
 ## Additional Context

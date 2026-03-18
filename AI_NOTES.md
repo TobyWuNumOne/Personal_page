@@ -10,6 +10,17 @@
 - 內容型變更走 `.github/workflows/cms-sync.yml` 與 `scripts/cms_sync.py` 的結構化流程。
 - PocketBase schema 摘要整理在 `POCKETBASE_CONTENT_REFERENCE.md`，供 AI 產生內容與準備 `CMS Sync` 輸入時參照。
 
+## Current Automation State
+
+- 已完成：移除舊的自製 OpenAI coding pipeline，改為 `Copilot 主流程 + Codex 補位`
+- 已完成：repo-wide Copilot instructions、path-specific instructions、`AGENTS.md`
+- 已完成：`CMS Sync` workflow，可做 PocketBase preview/apply
+- 已完成：`[Content]` issue 觸發自動 CMS preview comment
+- 已完成：`[Bug]` / `[Feature]` issue eligibility gate 與自動指派 Copilot coding agent workflow
+- 目前限制：`scripts/cms_proposal.py` 仍是 parser/translator，不是 AI content generator
+- 目前限制：code issue workflow 只應處理小而清楚的工作；高風險 issue 仍應轉 Codex/manual
+- 下一步目標：讓 AI 根據自然語言 issue 自動產生 `collection`、`filter`、`updates_json`，再維持 preview-first 流程
+
 ## 🟢 Now / 🔜 Next / 🧱 Blockers
 
 - **Now**: PocketBase 已上線；collections 匯入完成（pages/posts/projects/tags/skills/media_assets/site_settings）；頁面整合完成度約 90%

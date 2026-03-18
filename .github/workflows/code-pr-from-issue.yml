@@ -1,0 +1,156 @@
+name: Code PR From Issue
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: code-pr-from-issue-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  route:
+    if: startsWith(github.event.issue.title, '[Bug]') || startsWith(github.event.issue.title, '[bug]') || startsWith(github.event.issue.title, '[Feature]') || startsWith(github.event.issue.title, '[feature]')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Route issue for automation
+        id: route
+        run: python scripts/dev_issue_router.py
+
+      - name: Assign eligible issue to Copilot coding agent
+        id: assign
+        if: steps.route.outputs.eligible == 'true'
+        env:
+          COPILOT_ASSIGNMENT_PAT: ${{ secrets.COPILOT_ASSIGNMENT_PAT }}
+        run: python scripts/assign_issue_to_copilot.py --issue-number "${{ github.event.issue.number }}"
+
+      - name: Upsert success comment
+        if: steps.route.outputs.eligible == 'true' && success()
+        uses: actions/github-script@v7
+        env:
+          ASSIGNEE_LOGIN: ${{ steps.assign.outputs.assignee_login }}
+          ROUTE_REASON: ${{ steps.route.outputs.reason }}
+        with:
+          script: |
+            const marker = '<!-- code-pr-router-comment -->';
+            const body = [
+              marker,
+              'This issue was routed to the GitHub Copilot coding agent for automatic code-to-PR handling.',
+              '',
+              `- assignee: \`${process.env.ASSIGNEE_LOGIN || 'copilot-swe-agent'}\``,
+              `- status: ${process.env.ROUTE_REASON}`,
+              '',
+              'Expected next step: Copilot works on the issue and opens a PR in this repository.',
+              'Merge remains manual after review and CI.'
+            ].join('\n');
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              per_page: 100
+            });
+            const existing = comments.find((comment) => comment.body && comment.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body
+              });
+            }
+
+      - name: Upsert ineligible comment
+        if: steps.route.outputs.eligible != 'true'
+        uses: actions/github-script@v7
+        env:
+          ROUTE_REASON: ${{ steps.route.outputs.reason }}
+        with:
+          script: |
+            const marker = '<!-- code-pr-router-comment -->';
+            const body = [
+              marker,
+              'This issue was not sent to the automatic code-to-PR workflow.',
+              '',
+              `Reason: ${process.env.ROUTE_REASON}`,
+              '',
+              'Route this issue to Codex/manual handling if it is cross-cutting, high-risk, or still underspecified.'
+            ].join('\n');
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              per_page: 100
+            });
+            const existing = comments.find((comment) => comment.body && comment.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body
+              });
+            }
+
+      - name: Upsert assignment failure comment
+        if: steps.route.outputs.eligible == 'true' && failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = '<!-- code-pr-router-comment -->';
+            const body = [
+              marker,
+              'Automatic code-to-PR routing passed eligibility, but assignment to the GitHub Copilot coding agent failed.',
+              '',
+              'Check repository Copilot settings and confirm the `COPILOT_ASSIGNMENT_PAT` secret belongs to a user with access to Copilot coding agent and this repository.'
+            ].join('\n');
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              per_page: 100
+            });
+            const existing = comments.find((comment) => comment.body && comment.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body
+              });
+            }
