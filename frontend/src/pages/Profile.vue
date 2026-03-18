@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, onMounted, computed } from 'vue';
+    import { ref, onMounted, computed, watch } from 'vue';
     import { marked } from 'marked';
     import Footer from '@/components/baseic/Footer.vue';
     import Navbar from '@/components/baseic/Navbar.vue';
@@ -32,6 +32,16 @@
         const mediaRecord = aboutPage.value.expand.picture;
         return `https://cms.taizanthebar.com/api/files/${mediaRecord.collectionId}/${mediaRecord.id}/${mediaRecord.file}`;
     });
+
+    const profileImageError = ref(false);
+
+    watch(profileImageUrl, () => {
+        profileImageError.value = false;
+    });
+
+    const handleImageError = () => {
+        profileImageError.value = true;
+    };
 
     // 載入資料
     const loadData = async () => {
@@ -113,7 +123,7 @@
                             >
                                 <!-- 頭像圖片 -->
                                 <div
-                                    v-if="profileImageUrl"
+                                    v-if="profileImageUrl && !profileImageError"
                                     class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden shadow-lg"
                                 >
                                     <img
@@ -123,6 +133,7 @@
                                             '個人頭像'
                                         "
                                         class="w-full h-full object-cover"
+                                        @error="handleImageError"
                                     />
                                 </div>
                                 <!-- 預設頭像 -->
