@@ -9,7 +9,7 @@ from typing import Any
 
 SECTION_RE = re.compile(r"^##\s+(.+?)\n(.*?)(?=^##\s+|\Z)", re.MULTILINE | re.DOTALL)
 INLINE_FIELD_RE = re.compile(
-    r"(?im)^(?:[-*]\s*)?(collection|record id or filter|json field updates|pocketbase collection|record identifier)\s*:\s*(.+)$"
+    r"(?im)^\s*(?:[-*]\s*)?(collection|record id or filter|json field updates|pocketbase collection|record identifier)\s*:\s*(.+)$"
 )
 
 
@@ -50,9 +50,10 @@ def parse_structured_lines(content: str) -> dict[str, str]:
     values: dict[str, str] = {}
     for raw_line in content.splitlines():
         line = raw_line.strip()
-        if not line.startswith("-"):
+        if not line:
             continue
-        line = line[1:].strip()
+        if line.startswith(("-", "*")):
+            line = line[1:].strip()
         if ":" not in line:
             continue
         key, value = line.split(":", 1)
