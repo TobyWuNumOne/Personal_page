@@ -5,8 +5,6 @@ on:
     types:
       - opened
       - edited
-      - reopened
-      - labeled
 
 permissions:
   contents: read
@@ -14,7 +12,7 @@ permissions:
 
 jobs:
   preview:
-    if: contains(join(github.event.issue.labels.*.name, ','), 'content')
+    if: startsWith(github.event.issue.title, '[Content]') || startsWith(github.event.issue.title, '[content]')
     runs-on: ubuntu-latest
 
     steps:
