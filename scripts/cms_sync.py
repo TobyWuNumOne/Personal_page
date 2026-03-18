@@ -32,6 +32,13 @@ def load_updates(raw: str) -> dict[str, Any]:
     return payload
 
 
+def clean_optional(value: str | None) -> str | None:
+    if value is None:
+        return None
+    cleaned = value.strip()
+    return cleaned or None
+
+
 def make_request(
     method: str,
     url: str,
@@ -103,11 +110,19 @@ def resolve_record(
     record_id: str | None,
     record_filter: str | None,
 ) -> dict[str, Any]:
+    record_id = clean_optional(record_id)
+    record_filter = clean_optional(record_filter)
     collection_part = parse.quote(collection, safe="")
     if record_id:
         record_part = parse.quote(record_id, safe="")
         url = f"{base_url}/api/collections/{collection_part}/records/{record_part}"
-        return make_request("GET", url, token=token)
+        try:
+            return make_request("GET", url, token=token)
+        except RuntimeError as exc:
+            if "404" not in str(exc) or not record_filter:
+                raise RuntimeError(
+                    f"Record `{record_id}` was not found in collection `{collection}`"
+                ) from exc
 
     if not record_filter:
         raise RuntimeError("Either --record-id or --filter is required")
@@ -175,7 +190,13 @@ def main() -> int:
     updates = load_updates(args.updates_json)
     base_url = normalize_base_url(require_env("POCKETBASE_URL"))
     token = authenticate(base_url)
-    record = resolve_record(base_url, token, args.collection, args.record_id, args.filter)
+    record = resolve_record(
+        base_url,
+        token,
+        args.collection.strip(),
+        args.record_id,
+        args.filter,
+    )
 
     summary_lines = preview_changes(record, updates)
     write_summary(summary_lines)

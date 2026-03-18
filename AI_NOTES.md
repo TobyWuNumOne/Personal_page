@@ -8,6 +8,7 @@
 - Codex 用於高複雜度實作、跨檔重構、疑難除錯與 AI/deployment 流程調整。
 - 一般 code PR 不直接更新 production PocketBase。
 - 內容型變更走 `.github/workflows/cms-sync.yml` 與 `scripts/cms_sync.py` 的結構化流程。
+- PocketBase schema 摘要整理在 `POCKETBASE_CONTENT_REFERENCE.md`，供 AI 產生內容與準備 `CMS Sync` 輸入時參照。
 
 ## 🟢 Now / 🔜 Next / 🧱 Blockers
 

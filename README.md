@@ -44,7 +44,9 @@
 內容更新不再走自由 prompt 的自動 agent。改為受控的 CMS workflow：
 
 - Workflow: [`cms-sync.yml`](/Users/codyloveyou/code/personal_page/.github/workflows/cms-sync.yml)
+- Auto-preview workflow: [`cms-preview-from-issue.yml`](/Users/codyloveyou/code/personal_page/.github/workflows/cms-preview-from-issue.yml)
 - Script: [`cms_sync.py`](/Users/codyloveyou/code/personal_page/scripts/cms_sync.py)
+- Proposal parser: [`cms_proposal.py`](/Users/codyloveyou/code/personal_page/scripts/cms_proposal.py)
 
 ### 設計原則
 
@@ -52,6 +54,13 @@
 - 預設支援 preview，再由明確 apply 執行寫入
 - 使用 PocketBase superuser token 或 email/password 驗證
 - 將 CMS 寫入與一般 code PR 分離
+
+### 第一版自動化
+
+- 建立或更新帶有 `content` label 的 issue
+- workflow 會從 issue 內的 `Structured CMS Inputs` 解析 `collection`、`record_id` 或 `filter`、`updates_json`
+- 自動執行 preview，並把結果 comment 回 issue
+- 正式寫入仍由你手動執行 `CMS Sync` workflow 並設定 `apply=true`
 
 ### 需要設定的 GitHub Secrets
 

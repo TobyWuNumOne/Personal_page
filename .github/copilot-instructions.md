@@ -7,6 +7,7 @@ This repository uses GitHub Copilot coding agent for narrow, reviewable work and
 - `frontend/` is the main application. It is a Vue 3 + Vite + Tailwind SPA deployed on Vercel.
 - `cms/` contains the PocketBase container setup deployed on Railway.
 - PocketBase is the source of truth for site content. Frontend code should read from PocketBase, not duplicate content in code unless there is an explicit fallback.
+- PocketBase content schema summary lives in `POCKETBASE_CONTENT_REFERENCE.md`. Use it when preparing CMS updates or content generation.
 
 ## Default working style
 
@@ -32,4 +33,5 @@ This repository uses GitHub Copilot coding agent for narrow, reviewable work and
 
 - General code-change PRs must not directly update production PocketBase data.
 - PocketBase writes go through the dedicated CMS workflow and require structured inputs.
+- Content issues labeled `content` can auto-generate a CMS preview from the issue body. Keep the issue fields structured and machine-readable.
 - Treat secrets, deployment settings, and production data as high-risk surfaces; minimize changes and explain them clearly in the PR.
