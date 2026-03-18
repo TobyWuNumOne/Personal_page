@@ -8,6 +8,9 @@ from typing import Any
 
 
 SECTION_RE = re.compile(r"^##\s+(.+?)\n(.*?)(?=^##\s+|\Z)", re.MULTILINE | re.DOTALL)
+INLINE_FIELD_RE = re.compile(
+    r"(?im)^(?:[-*]\s*)?(collection|record id or filter|json field updates|pocketbase collection|record identifier)\s*:\s*(.+)$"
+)
 
 
 def require_env(name: str) -> str:
@@ -53,6 +56,13 @@ def parse_structured_lines(content: str) -> dict[str, str]:
         if ":" not in line:
             continue
         key, value = line.split(":", 1)
+        values[key.strip().lower()] = normalize_inline_code(value.strip())
+    return values
+
+
+def parse_inline_fields(body: str) -> dict[str, str]:
+    values: dict[str, str] = {}
+    for key, value in INLINE_FIELD_RE.findall(body):
         values[key.strip().lower()] = normalize_inline_code(value.strip())
     return values
 
@@ -114,16 +124,31 @@ def build_result(issue: dict[str, Any]) -> dict[str, Any]:
     body = issue.get("body") or ""
     sections = parse_sections(body)
     structured = parse_structured_lines(sections.get("structured cms inputs", ""))
+    inline_fields = parse_inline_fields(body)
 
     collection = normalize_inline_code(
-        structured.get("collection") or sections.get("pocketbase collection", "")
+        structured.get("collection")
+        or inline_fields.get("collection")
+        or inline_fields.get("pocketbase collection")
+        or sections.get("pocketbase collection", "")
     )
     if not collection:
         raise RuntimeError("Missing PocketBase collection in issue body")
 
-    raw_identifier = structured.get("record id or filter") or sections.get("record identifier")
+    raw_identifier = (
+        structured.get("record id or filter")
+        or inline_fields.get("record id or filter")
+        or inline_fields.get("record identifier")
+        or sections.get("record identifier")
+    )
     record_id, record_filter = parse_identifier(raw_identifier)
-    updates = derive_updates(sections, structured)
+    updates = derive_updates(
+        sections,
+        {
+            **inline_fields,
+            **structured,
+        },
+    )
 
     return {
         "issue_number": issue["number"],
