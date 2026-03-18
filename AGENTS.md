@@ -28,3 +28,4 @@ In those cases, leave a clear draft or route the task to Codex/manual review.
 
 - Frontend validation command: `npm --prefix frontend run build`
 - If validation was not run, state that explicitly.
+- Review AI-generated PRs against `.github/AI_REVIEW_HEURISTICS.md`.

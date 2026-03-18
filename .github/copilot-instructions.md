@@ -30,6 +30,7 @@ This repository uses GitHub Copilot coding agent for narrow, reviewable work and
 - For frontend changes, prefer running `npm --prefix frontend run build`.
 - If a command cannot be run, say so in the PR summary rather than inventing results.
 - Do not claim Railway, Vercel, or PocketBase production changes were applied unless a dedicated workflow or a human explicitly performed them.
+- Review AI-generated PRs against `.github/AI_REVIEW_HEURISTICS.md`.
 
 ## CMS and production safety
 

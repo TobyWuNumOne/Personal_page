@@ -10,3 +10,5 @@ applyTo: "frontend/**"
 - Preserve existing page behavior and data-loading patterns.
 - For content rendering changes, prefer fixing the smallest component or composable that owns the behavior.
 - Validate frontend changes with `npm --prefix frontend run build` when possible.
+- Prefer targeted bug fixes over opportunistic refactors.
+- If the issue is about one UI behavior, avoid changing unrelated copy, spacing, or component structure.

@@ -17,6 +17,8 @@
 - 已完成：`CMS Sync` workflow，可做 PocketBase preview/apply
 - 已完成：`[Content]` issue 觸發自動 CMS preview comment
 - 已完成：`[Bug]` / `[Feature]` issue eligibility gate 與自動指派 Copilot coding agent workflow
+- 已完成：`[Bug]` issue 實測成功指派給 Copilot，Copilot 已建立 linked PR 與 Vercel preview
+- 已完成：建立 `.github/AI_REVIEW_HEURISTICS.md` 作為人工審查 AI PR 的基準
 - 目前限制：`scripts/cms_proposal.py` 仍是 parser/translator，不是 AI content generator
 - 目前限制：code issue workflow 只應處理小而清楚的工作；高風險 issue 仍應轉 Codex/manual
 - 下一步目標：讓 AI 根據自然語言 issue 自動產生 `collection`、`filter`、`updates_json`，再維持 preview-first 流程

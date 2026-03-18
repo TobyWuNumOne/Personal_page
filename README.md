@@ -37,6 +37,7 @@
 - Frontend 規則：[`frontend.instructions.md`](/Users/codyloveyou/code/personal_page/.github/instructions/frontend.instructions.md)
 - Workflow 規則：[`workflows.instructions.md`](/Users/codyloveyou/code/personal_page/.github/instructions/workflows.instructions.md)
 - CMS 規則：[`cms.instructions.md`](/Users/codyloveyou/code/personal_page/.github/instructions/cms.instructions.md)
+- AI PR 審查基準：[`AI_REVIEW_HEURISTICS.md`](/Users/codyloveyou/code/personal_page/.github/AI_REVIEW_HEURISTICS.md)
 - Agent 共用規則：[`AGENTS.md`](/Users/codyloveyou/code/personal_page/AGENTS.md)
 
 ## CMS 更新流程
@@ -77,7 +78,9 @@
 - 已建立 `CMS Sync` 手動寫入 workflow
 - 已建立從 content issue 自動產生 CMS preview 的 workflow
 - 已建立從 `[Bug]` / `[Feature]` issue 自動路由到 Copilot coding agent 的 workflow
+- 已實測 `[Bug]` issue 會成功指派給 Copilot，並建立 linked PR 與 Vercel preview deployment
 - 已整理 PocketBase schema/content 參考文件，供 AI 與人工更新時共用
+- 已建立 AI PR review heuristics，供人工審查 Copilot 產出的 PR
 
 ### 下一步目標
 
