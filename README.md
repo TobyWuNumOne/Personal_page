@@ -1,27 +1,26 @@
-# Personal Page
+# Cody Wu — 個人作品集網站
 
-個人網站專案，包含前端應用、PocketBase CMS，以及圍繞 GitHub 的 AI 輔助開發流程。
+這是 Cody Wu 的個人作品集網站，用來展示個人簡介、side projects、以及技術文章。網站以 Vue 3 打造，內容由 PocketBase CMS 驅動，並透過 GitHub 的 AI 輔助工作流程持續迭代開發。
 
-## 專案架構
+## 網站內容
+
+- **首頁**：個人介紹、社群連結（Instagram、GitHub、Facebook、LinkedIn、Line）
+- **作品集**：展示 side projects，包含說明、技術標籤與圖片
+- **部落格**：技術與生活相關文章
+- **個人頁**：更多個人背景與技能介紹
+
+## 技術架構
+
+| 層級 | 技術 | 部署 |
+|------|------|------|
+| 前端 | Vue 3 + Vite + Tailwind CSS | Vercel |
+| CMS  | PocketBase | Railway |
 
 ### `frontend/`
-
-- Vue 3 + Vite + Tailwind CSS
-- 部署到 Vercel
-- 負責首頁、作品集、部落格與個人內容頁面
+Vue 3 SPA，透過 PocketBase JS SDK 讀取 `pages`、`projects`、`posts` 等內容。支援深色模式切換。
 
 ### `cms/`
-
-- PocketBase 容器設定
-- 部署到 Railway
-- 提供內容資料、媒體檔案與 API
-
-## 系統邊界
-
-- `frontend/` 是主要應用程式，從 PocketBase 讀取 `site_settings`、`pages`、`projects` 等內容。
-- `cms/` 是內容與媒體來源，不應由一般 code PR 直接做 production 寫入。
-- GitHub 是程式碼、issue、PR 與 AI 協作的入口。
-- Vercel 與 Railway 延續既有 Git-based deployment。
+PocketBase 容器設定，作為內容、媒體與 API 的唯一來源。
 
 ## AI 開發策略
 
