@@ -134,6 +134,4 @@ PORT=8080
 - [Vercel 部署指南](https://vercel.com/docs)
 - [Railway 部署指南](https://docs.railway.app/)
 
-## 授權
 
-MIT License - 詳見 [LICENSE](cms/LICENSE)。
